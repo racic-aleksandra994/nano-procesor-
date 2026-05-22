@@ -6,8 +6,8 @@ int main() {
     int PC = 0;
     int trci = 1;
 
-    // Novi kod: Učitaj 1, uradi NOT, odštampaj (mora da ispiše 0!)
-    int memorija[] = {1, 1, 5, 4, 0}; 
+    // Učitaj 5, učitaj 3, oduzmi ih (6), odštampaj (4), ugasi se (0)
+    int memorija[] = {1, 5, 2, 3, 6, 4, 0}; 
 
     printf("--- NANO PROCESOR POKRENUT ---\n");
 
@@ -35,6 +35,10 @@ int main() {
             case 5: 
                 printf("[PC: %d] NOT za Registar A (Prethodno: %d)\n", PC, regA);
                 regA = !regA; 
+                break;
+            case 6: 
+                printf("[PC: %d] SUB (%d - %d)\n", PC, regA, regB);
+                regA = regA - regB;
                 break;
             case 0: 
                 printf("[PC: %d] HALT\n", PC);
