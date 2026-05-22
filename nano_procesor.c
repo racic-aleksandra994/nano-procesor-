@@ -1,57 +1,48 @@
 #include <stdio.h>
 
 int main() {
-    // 1. Komponente procesora (Registri i Program Counter)
     int regA = 0;
     int regB = 0;
-    int PC = 0; // Program Counter - pokazuje gde smo u memoriji
+    int PC = 0;
     int trci = 1;
 
-    // 2. Memorija sa tvojim programom iz sveske
-    // Kodovi: 1 = LOAD_A, 2 = LOAD_B, 3 = ADD, 4 = PRINT, 0 = HALT
-    int memorija[] = {1, 5, 2, 3, 3, 4, 0}; 
+    // Novi kod: Učitaj 1, uradi NOT, odštampaj (mora da ispiše 0!)
+    int memorija[] = {1, 1, 5, 4, 0}; 
 
     printf("--- NANO PROCESOR POKRENUT ---\n");
 
-    // 3. Ciklus izvršavanja (Fetch - Decode - Execute)
     while (trci) {
-        int instrukcija = memorija[PC]; // FETCH (Učitaj instrukciju)
+        int instrukcija = memorija[PC]; 
 
-        switch (instrukcija) { // DECODE & EXECUTE (Dekodiraj i Izvrši)
-            case 1: // LOAD A <vrednost>
-                PC++; // Pomeri PC da uzme podatak koji sledi nakon instrukcije
+        switch (instrukcija) { 
+            case 1: 
+                PC++;
                 regA = memorija[PC];
-                printf("[PC: %d] LOAD A %d (RegA = %d)\n", PC-1, regA, regA);
+                printf("[PC: %d] LOAD A %d\n", PC-1, regA);
                 break;
-                
-            case 2: // LOAD B <vrednost>
-                PC++; // Pomeri PC da uzme podatak koji sledi nakon instrukcije
+            case 2: 
+                PC++;
                 regB = memorija[PC];
-                printf("[PC: %d] LOAD B %d (RegB = %d)\n", PC-1, regB, regB);
+                printf("[PC: %d] LOAD B %d\n", PC-1, regB);
                 break;
-                
-            case 3: // ADD
+            case 3: 
                 printf("[PC: %d] ADD (%d + %d)\n", PC, regA, regB);
-                regA = regA + regB; // Rezultat ide nazad u regA
+                regA = regA + regB;
                 break;
-                
-            case 4: // PRINT
+            case 4: 
                 printf("[PC: %d] PRINT -> IZLAZ = %d\n", PC, regA);
                 break;
-                
-            case 0: // HALT
-                printf("[PC: %d] HALT (Kraj programa)\n", PC);
-                trci = 0;
+            case 5: 
+                printf("[PC: %d] NOT za Registar A (Prethodno: %d)\n", PC, regA);
+                regA = !regA; 
                 break;
-                
-            default:
-                printf("Nepoznata instrukcija na poziciji %d!\n", PC);
+            case 0: 
+                printf("[PC: %d] HALT\n", PC);
                 trci = 0;
                 break;
         }
-        PC++; // Pomeri na sledeću instrukciju
+        PC++; 
     }
-
     printf("--- PROCESOR JE USPEŠNO STAO ---\n");
     return 0;
 }
